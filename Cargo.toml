@@ -1,0 +1,26 @@
+[package]
+name = "rustc-lite"
+version = "0.1.0"
+edition = "2021"
+description = "Minimal no_std Rust compiler using Cranelift backend for bare-metal and embedded targets"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/suhteevah/rustc-lite"
+keywords = ["compiler", "rust", "cranelift", "no_std", "jit"]
+categories = ["no-std", "compilers", "development-tools"]
+authors = ["Matt Gates <ridgecellrepair@gmail.com>"]
+readme = "README.md"
+
+[dependencies]
+# NOTE: cranelift-codegen and cranelift-frontend require no_std-compatible forks
+# for bare-metal use. The upstream crates depend on std. See README.md for details
+# on which forks to use, or use [patch.crates-io] in your workspace.
+#
+# If building for a hosted (std) target, the upstream crates work as-is.
+# For no_std / bare-metal targets, you need patched forks such as:
+#   https://github.com/suhteevah/cranelift-codegen-nostd
+#   https://github.com/suhteevah/cranelift-frontend-nostd
+cranelift-codegen = { version = "0.116", default-features = false, features = ["core", "x86"] }
+cranelift-frontend = { version = "0.116", default-features = false, features = ["core"] }
+rustc-hash = { version = "2.1", default-features = false }
+indexmap = { version = "2", default-features = false }
+log = "0.4"
